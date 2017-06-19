@@ -25,7 +25,7 @@ namespace eBookRental.Core.Domain
 
         }
 
-        public User(string email, string username, 
+        public User(string email, string username, string fullName,
             string password, string salt, string role)
         {
             Id = Guid.NewGuid();

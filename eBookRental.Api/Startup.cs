@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using eBookRental.Infrastructure.Services;
+using eBookRental.Core.Repositories;
+using eBookRental.Infrastructure.Repositories;
+using eBookRental.Infrastructure.Mappers;
 
 namespace eBookRental.Api
 {
@@ -28,6 +32,9 @@ namespace eBookRental.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.AddScoped<IUserRepository, InMemoryUserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddMvc();
         }
 

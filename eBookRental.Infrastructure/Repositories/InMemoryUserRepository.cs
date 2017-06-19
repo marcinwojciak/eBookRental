@@ -10,7 +10,13 @@ namespace eBookRental.Infrastructure.Repositories
 {
     public class InMemoryUserRepository : IUserRepository
     {
-        private static readonly ISet<User> _users = new HashSet<User>();
+        private static readonly ISet<User> _users = new HashSet<User>
+        {
+            new User("tomek@domain.com", "Tomek", "Tomasz Nowak", "sekrett", "salt", "role"),
+            new User("ania@domain.com", "Ania", "Anna Nowak",  "sekreta", "salt", "role"),
+            new User("michal@domain.com", "Michał", "Michał Kowalski", "sekretm", "salt", "role"),
+            new User("ola@domain.com", "Ola", "Aleksandra Kowalska", "sekreto", "salt", "role")
+        };
 
         public async Task AddAsync(User user)
         {
