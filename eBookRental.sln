@@ -10,12 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBookRental.Infrastructure"
 		{F0A418D6-BA05-4212-81CF-6FFB3054D8C8} = {F0A418D6-BA05-4212-81CF-6FFB3054D8C8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBookRental.Tests", "eBookRental.Tests\eBookRental.Tests.csproj", "{3F7FEF6A-949C-42CD-B2E6-DDE96415642D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FB70DE83-55FC-4502-BEF8-77C26C058887} = {FB70DE83-55FC-4502-BEF8-77C26C058887}
-		{87C2F7D2-55CC-4EBD-86F7-F23CA3BC3DE8} = {87C2F7D2-55CC-4EBD-86F7-F23CA3BC3DE8}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBookRental.Tests.EndToEnd", "eBookRental.Tests.EndToEnd\eBookRental.Tests.EndToEnd.csproj", "{82FEB34F-F601-499F-9E19-94427179D457}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FB70DE83-55FC-4502-BEF8-77C26C058887} = {FB70DE83-55FC-4502-BEF8-77C26C058887}
@@ -25,6 +19,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBookRental.Api", "eBookRental.Api\eBookRental.Api.csproj", "{FB70DE83-55FC-4502-BEF8-77C26C058887}"
 	ProjectSection(ProjectDependencies) = postProject
 		{87C2F7D2-55CC-4EBD-86F7-F23CA3BC3DE8} = {87C2F7D2-55CC-4EBD-86F7-F23CA3BC3DE8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBookRental.Tests", "eBookRental.Tests\eBookRental.Tests.csproj", "{A18D6922-6A9F-4DEE-A2C3-6999771FF3CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FB70DE83-55FC-4502-BEF8-77C26C058887} = {FB70DE83-55FC-4502-BEF8-77C26C058887}
 	EndProjectSection
 EndProject
 Global
@@ -41,10 +40,6 @@ Global
 		{87C2F7D2-55CC-4EBD-86F7-F23CA3BC3DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87C2F7D2-55CC-4EBD-86F7-F23CA3BC3DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87C2F7D2-55CC-4EBD-86F7-F23CA3BC3DE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F7FEF6A-949C-42CD-B2E6-DDE96415642D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F7FEF6A-949C-42CD-B2E6-DDE96415642D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F7FEF6A-949C-42CD-B2E6-DDE96415642D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F7FEF6A-949C-42CD-B2E6-DDE96415642D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82FEB34F-F601-499F-9E19-94427179D457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82FEB34F-F601-499F-9E19-94427179D457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82FEB34F-F601-499F-9E19-94427179D457}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,6 +48,10 @@ Global
 		{FB70DE83-55FC-4502-BEF8-77C26C058887}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB70DE83-55FC-4502-BEF8-77C26C058887}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB70DE83-55FC-4502-BEF8-77C26C058887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A18D6922-6A9F-4DEE-A2C3-6999771FF3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A18D6922-6A9F-4DEE-A2C3-6999771FF3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A18D6922-6A9F-4DEE-A2C3-6999771FF3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A18D6922-6A9F-4DEE-A2C3-6999771FF3CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

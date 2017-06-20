@@ -12,8 +12,8 @@ namespace eBookRental.Infrastructure.Repositories
     {
         private static readonly ISet<User> _users = new HashSet<User>
         {
-            new User("tomek@domain.com", "Tomek", "Tomasz Nowak", "sekrett", "salt", "role"),
-            new User("ania@domain.com", "Ania", "Anna Nowak",  "sekreta", "salt", "role"),
+            new User("tomek@domain.com", "Tomek", "Tomasz Działowy", "sekrett", "salt", "role"),
+            new User("ania@domain.com", "Ania", "Anna Działowa",  "sekreta", "salt", "role"),
             new User("michal@domain.com", "Michał", "Michał Kowalski", "sekretm", "salt", "role"),
             new User("ola@domain.com", "Ola", "Aleksandra Kowalska", "sekreto", "salt", "role")
         };

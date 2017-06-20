@@ -47,7 +47,12 @@ namespace eBookRental.Api.Controllers
 
         //POST
         [HttpPost]
-        public async Task Create([FromBody]CreateUser command)
-            => await _userService.RegisterAsync(command.Email, command.Username, command.FullName, command.Password, command.Role);
+        public async Task<IActionResult> Create([FromBody]CreateUser command)
+        {
+            await _userService.RegisterAsync(command.Email, command.Username, command.FullName, command.Password, command.Role);
+
+            return Created($"users/{command.Email}", new object());
+        }
+            
     }
 }
