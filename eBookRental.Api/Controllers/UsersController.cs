@@ -1,4 +1,5 @@
-﻿using eBookRental.Infrastructure.Commands.Users;
+﻿using eBookRental.Infrastructure.Commands;
+using eBookRental.Infrastructure.Commands.Users;
 using eBookRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,11 +10,12 @@ using System.Threading.Tasks;
 namespace eBookRental.Api.Controllers
 {
     [Route("users")]
-    public class UsersController : Controller
+    public class UsersController : ApiController
     {
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher)
+            : base(commandDispatcher)
         {
             _userService = userService;
         }
@@ -49,10 +51,19 @@ namespace eBookRental.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreateUser command)
         {
-            await _userService.RegisterAsync(command.Email, command.Username, command.FullName, command.Password, command.Role);
+            await CommandDispatcher.DispatchAsync(command);
 
             return Created($"users/{command.Email}", new object());
         }
-            
+
+        [HttpPut]
+        [Route("password")]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPassword command)
+        {
+            await CommandDispatcher.DispatchAsync(command);
+
+            return NoContent();
+        }
+
     }
 }

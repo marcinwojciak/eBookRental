@@ -69,6 +69,21 @@ namespace eBookRental.Tests.EndToEnd.Controllers
             response.Headers.Location.ToString().ShouldBeEquivalentTo($"users/{request.Email}");
         }
 
+        [Fact]
+        public async Task given_current_password_should_be_changed_to_new_password()
+        {
+            var request = new ChangeUserPassword
+            {
+               CurrentPassword = "oldPaddword",
+               NewPassword = "newPeppword"
+            };
+
+            var payload = GetPayload(request);
+            var response = await _client.PutAsync($"users/password", payload);
+
+            response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NoContent);
+        }
+
         //W zapytaniu przekazujemy Http/StringContent. Tak tworzymy stringa, który bedzie się serializował do postaci json'a
         private static StringContent GetPayload(object data)
         {
