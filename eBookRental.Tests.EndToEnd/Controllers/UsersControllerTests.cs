@@ -5,8 +5,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -30,7 +28,7 @@ namespace eBookRental.Tests.EndToEnd.Controllers
         [Fact]
         public async Task given_valid_email_user_should_exist()
         {
-            var email = "ania@domain.com";
+            var email = "user1@domain.com";
             var response = await _client.GetAsync($"users/{email}");
 
             response.EnsureSuccessStatusCode();
@@ -67,6 +65,21 @@ namespace eBookRental.Tests.EndToEnd.Controllers
 
             response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.Created);
             response.Headers.Location.ToString().ShouldBeEquivalentTo($"users/{request.Email}");
+        }
+
+        [Fact]
+        public async Task given_current_password_should_be_changed_to_new_password()
+        {
+            var request = new ChangeUserPassword
+            {
+               CurrentPassword = "oldPaddword",
+               NewPassword = "newPeppword"
+            };
+
+            var payload = GetPayload(request);
+            var response = await _client.PutAsync($"account/password", payload);
+
+            response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NoContent);
         }
 
         //W zapytaniu przekazujemy Http/StringContent. Tak tworzymy stringa, który bedzie się serializował do postaci json'a

@@ -10,6 +10,8 @@ namespace eBookRental.Infrastructure.Services
     {
         Task<UserDto> GetSingleAsync(Guid id);
         Task<UserDto> GetSingleAsync(string email);
-        Task RegisterAsync(string email, string username, string fullName, string password, string role);
+        Task LoginAsync(string email, string password);
+        Task RegisterAsync(Guid id, string email, string username, string fullName, string password, string role);
+        
     }
 }
