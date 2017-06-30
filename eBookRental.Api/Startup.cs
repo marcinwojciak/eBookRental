@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using eBookRental.Infrastructure.Services;
-using eBookRental.Core.Repositories;
-using eBookRental.Infrastructure.Repositories;
 using eBookRental.Infrastructure.Mappers;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using eBookRental.Infrastructure.IoC.Modules;
+using Microsoft.IdentityModel.Tokens;
+using eBookRental.Infrastructure.Settings;
+using System.Text;
+using eBookRental.Infrastructure.Services;
 
 namespace eBookRental.Api
 {
@@ -36,14 +34,17 @@ namespace eBookRental.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddScoped<IUserRepository, InMemoryUserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddMemoryCache();
+            services.AddAuthorization(x => x.AddPolicy("user", y => y.RequireRole("user")));
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddMvc();
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterModule<CommandModule>();
+            builder.RegisterModule<CommandModule>(); //do sprawdzenia, czy dobrze sa zrobione te moduły.
+            builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<RepositoryModule>();
+            builder.RegisterModule(new SettingsModule(Configuration));
             ApplicationContainer = builder.Build();
 
             return new AutofacServiceProvider(ApplicationContainer);
@@ -55,6 +56,22 @@ namespace eBookRental.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            var authSettings = app.ApplicationServices.GetService<AuthSettings>();
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = "http://localhost:52720",
+                    ValidateAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.Key))
+                }
+            });
+
+            var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+            dataInitializer.SeedDataAsync();
 
             app.UseMvc();
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());

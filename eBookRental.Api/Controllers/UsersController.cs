@@ -3,8 +3,6 @@ using eBookRental.Infrastructure.Commands.Users;
 using eBookRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace eBookRental.Api.Controllers
@@ -55,15 +53,5 @@ namespace eBookRental.Api.Controllers
 
             return Created($"users/{command.Email}", new object());
         }
-
-        [HttpPut]
-        [Route("password")]
-        public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPassword command)
-        {
-            await CommandDispatcher.DispatchAsync(command);
-
-            return NoContent();
-        }
-
     }
 }

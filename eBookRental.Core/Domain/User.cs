@@ -11,7 +11,7 @@ namespace eBookRental.Core.Domain
         public string Username { get; protected set; }
         public string FullName { get; protected set; }
         public string Email { get; protected set; }
-        public string Password { get; protected set; }
+        public string Password { get; set; }
         public string Salt { get; protected set; }
         public string Role { get; protected set; }
 
@@ -25,7 +25,7 @@ namespace eBookRental.Core.Domain
 
         }
 
-        public User(string email, string username, string fullName,
+        public User(Guid id, string email, string username, string fullName,
             string password, string salt, string role)
         {
             Id = Guid.NewGuid();

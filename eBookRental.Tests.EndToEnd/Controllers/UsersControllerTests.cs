@@ -5,8 +5,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -30,7 +28,7 @@ namespace eBookRental.Tests.EndToEnd.Controllers
         [Fact]
         public async Task given_valid_email_user_should_exist()
         {
-            var email = "ania@domain.com";
+            var email = "user1@domain.com";
             var response = await _client.GetAsync($"users/{email}");
 
             response.EnsureSuccessStatusCode();
@@ -79,7 +77,7 @@ namespace eBookRental.Tests.EndToEnd.Controllers
             };
 
             var payload = GetPayload(request);
-            var response = await _client.PutAsync($"users/password", payload);
+            var response = await _client.PutAsync($"account/password", payload);
 
             response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NoContent);
         }

@@ -19,7 +19,7 @@ namespace eBookRental.Infrastructure.Handlers
 
         public async Task HandleAsync(CreateUser command)
         {
-            await _userService.RegisterAsync(command.Email, command.Username, 
+            await _userService.RegisterAsync(Guid.NewGuid(), command.Email, command.Username, 
                 command.FullName, command.Password, command.Role);
         }
     }
