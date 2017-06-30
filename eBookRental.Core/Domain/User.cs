@@ -29,11 +29,80 @@ namespace eBookRental.Core.Domain
             string password, string salt, string role)
         {
             Id = Guid.NewGuid();
-            Email = email.ToLowerInvariant();
-            Username = username;
+            CreatedAt = DateTime.UtcNow;
+
+            SetEmail(email);
+            SetUsername(username);
+            SetFullName(fullName);
+            SetRole(role);
+            SetPassword(password, salt);
+            
+        }
+
+        private void SetRole(string role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                throw new Exception("Role is invalid.");
+            }
+
+            Role = role;
+        }
+
+        private void SetPassword(string password, string salt)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new Exception("Password is invalid.");
+            }
+
+            if (string.IsNullOrWhiteSpace(salt))
+            {
+                throw new Exception("Salt cannot be empty.");
+            }
+
             Password = password;
             Salt = salt;
-            Role = role;
+        }
+
+        private void SetFullName(string fullName)
+        {
+            if (!NameRegex.IsMatch(fullName))
+            {
+                throw new Exception("FullName is invalid.");
+            }
+
+            if (String.IsNullOrEmpty(fullName))
+            {
+                throw new Exception("FullName is invalid.");
+            }
+
+            FullName = fullName.ToLowerInvariant();
+        }
+
+        private void SetUsername(string username)
+        {
+            if (!NameRegex.IsMatch(username))
+            {
+                throw new Exception("Username is invalid.");
+            }
+
+            if (String.IsNullOrEmpty(username))
+            {
+                throw new Exception("Username is invalid.");
+            }
+
+            Username = username.ToLowerInvariant();
+        }
+
+        private void SetEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new Exception("Email is invalid.");
+            }
+
+            Email = email.ToLowerInvariant();
         }
     }
 }
