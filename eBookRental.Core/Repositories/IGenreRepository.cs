@@ -13,7 +13,7 @@ namespace eBookRental.Core.Repositories
         Task<IEnumerable<Genre>> FindBy(Func<Genre, bool> predicate);
 
         Task<Genre> GetSingleAsync(Guid id);
-        Task<Genre> GetSingleAsync(string name);
+        Task<Genre> GetSingleAsync(GenreType name);
 
         Task AddAsync(Genre genre);
         Task UpdateAsync(Genre genre);

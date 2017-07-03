@@ -10,7 +10,7 @@ namespace eBookRental.Core.Domain
         public Guid CustomerId { get; protected set; }
         public Guid SetId { get; protected set; }
         public Set Set { get; protected set; }
-        public string Status { get; protected set; }
+        public RentalStatus Status { get; protected set; }
 
         public DateTime RentalDate { get; protected set; }
         public DateTime? ReturnedDate { get; protected set; }

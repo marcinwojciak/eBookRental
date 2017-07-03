@@ -31,6 +31,9 @@ namespace eBookRental.Infrastructure.Repositories
         public async Task<Book> GetSingleAsync(string title)
             => await Task.FromResult(_books.SingleOrDefault(x => x.Title == title.ToLowerInvariant()));
 
+        public async Task<IEnumerable<Book>> OrderByDescendingAsync(Func<Book, bool> predicate)
+            => await Task.FromResult(_books.OrderByDescending(predicate));
+
         public async Task RemoveAsync(Guid id)
         {
             var book = await GetSingleAsync(id);
@@ -38,7 +41,7 @@ namespace eBookRental.Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task UpdateAsync(Book book)
+        public async Task UpdateAsync(string title, string description, string image, string writer, string publisher)
         {
             await Task.CompletedTask;
         }

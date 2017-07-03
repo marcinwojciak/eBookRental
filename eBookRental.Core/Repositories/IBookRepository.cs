@@ -11,12 +11,13 @@ namespace eBookRental.Core.Repositories
     {
         Task<IEnumerable<Book>> GetAllAsync();
         Task<IEnumerable<Book>> FindBy(Func<Book, bool> predicate);
+        Task<IEnumerable<Book>> OrderByDescendingAsync(Func<Book, bool> predicate);
 
         Task<Book> GetSingleAsync(Guid id);
         Task<Book> GetSingleAsync(string title);
 
         Task AddAsync(Book book);
-        Task UpdateAsync(Book book);
+        Task UpdateAsync(string title, string description, string image, string writer, string publisher);
         Task RemoveAsync(Guid id);
     }
 }

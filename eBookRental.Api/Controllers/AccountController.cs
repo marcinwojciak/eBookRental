@@ -27,7 +27,7 @@ namespace eBookRental.Api.Controllers
         {
             var token = _jwtService.CreateToken("tomek@domain.com", "user");
 
-            return Json(token);
+            return Ok(token);
         }
 
         [HttpPut]

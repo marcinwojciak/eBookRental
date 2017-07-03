@@ -53,6 +53,30 @@ namespace eBookRental.Tests.Services
         }
 
         [Fact]
+        public async Task get_single_async_should_invoke_user_repository_get_single_async_by_id_when_user_exists()
+        {
+            var userRepositoryMock = new Mock<IUserRepository>();
+            var encrypterMock = new Mock<IEncrypter>();
+            var mapperMock = new Mock<IMapper>();
+
+            encrypterMock.Setup(x => x.GetSalt(It.IsAny<string>())).Returns("hash");
+            encrypterMock.Setup(x => x.GetHash(It.IsAny<string>(), It.IsAny<string>())).Returns("salt");
+
+            var userService = new UserService(userRepositoryMock.Object, mapperMock.Object, encrypterMock.Object);
+
+            await userService.GetSingleAsync("tomek@domain.com");
+
+            var user = new User(Guid.NewGuid(), "tomek@domain.com", "Tomek", "Tomasz Działowy", "sekrett", "salt", "role");
+
+            await userService.GetSingleAsync(user.Id);
+
+            userRepositoryMock.Setup(x => x.GetSingleAsync(It.IsAny<Guid>()))
+                             .ReturnsAsync(user);
+
+            userRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Guid>()), Times.Once);
+        }
+
+        [Fact]
         public async Task get_single_async_should_not_invoke_user_repository_get_single_async_when_user__does_not_exist()
         {
             var userRepositoryMock = new Mock<IUserRepository>();

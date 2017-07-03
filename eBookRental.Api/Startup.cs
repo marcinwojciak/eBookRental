@@ -36,6 +36,7 @@ namespace eBookRental.Api
             // Add framework services.
             services.AddMemoryCache();
             services.AddAuthorization(x => x.AddPolicy("user", y => y.RequireRole("user")));
+            services.AddAuthorization(x => x.AddPolicy("admin", p => p.RequireRole("admin")));
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddMvc();
 

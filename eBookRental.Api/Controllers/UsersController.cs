@@ -29,7 +29,7 @@ namespace eBookRental.Api.Controllers
                 return NotFound();
             }
 
-            return Json(user);
+            return Ok(user);
         }
 
         [HttpGet("{email}")]
@@ -42,13 +42,18 @@ namespace eBookRental.Api.Controllers
                 return NotFound();
             }
 
-            return Json(user);
+            return Ok(user);
         }
 
         //POST
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreateUser command)
         {
+            if(command == null)
+            {
+                return BadRequest();
+            }
+
             await CommandDispatcher.DispatchAsync(command);
 
             return Created($"users/{command.Email}", new object());

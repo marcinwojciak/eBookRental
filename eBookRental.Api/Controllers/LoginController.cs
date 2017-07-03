@@ -27,7 +27,7 @@ namespace eBookRental.Api.Controllers
             await CommandDispatcher.DispatchAsync(command);
             var jwt = _cache.GetJwt(command.TokenId);
 
-            return Json(jwt);
+            return Ok(jwt);
         }
     }
 }

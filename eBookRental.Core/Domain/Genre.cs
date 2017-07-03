@@ -7,7 +7,7 @@ namespace eBookRental.Core.Domain
     public class Genre
     {
         public Guid Id { get; protected set; }
-        public string Name { get; protected set; }
+        public GenreType Name { get; protected set; }
 
         public IEnumerable<Book> Books { get; protected set; }
 
@@ -16,10 +16,10 @@ namespace eBookRental.Core.Domain
 
         }
 
-        public Genre(string name)
+        public Genre(GenreType name)
         {
             Id = Guid.NewGuid();
-            Name = name.ToLowerInvariant();
+            Name = name;
 
             Books = new List<Book>();
         }

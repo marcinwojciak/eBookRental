@@ -28,8 +28,8 @@ namespace eBookRental.Infrastructure.Repositories
         public async Task<Genre> GetSingleAsync(Guid id)
             => await Task.FromResult(_genres.SingleOrDefault(x => x.Id == id));
 
-        public async Task<Genre> GetSingleAsync(string name)
-            => await Task.FromResult(_genres.SingleOrDefault(x => x.Name == name.ToLowerInvariant()));
+        public async Task<Genre> GetSingleAsync(GenreType name)
+            => await Task.FromResult(_genres.SingleOrDefault(x => x.Name == name));
 
         public async Task RemoveAsync(Guid id)
         {
