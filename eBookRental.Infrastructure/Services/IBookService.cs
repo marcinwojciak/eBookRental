@@ -14,8 +14,7 @@ namespace eBookRental.Infrastructure.Services
         Task<IEnumerable<BookDto>> GetByDateAsync();
         Task<IEnumerable<BookDto>> GetByWriterAsync(string writer);
 
-        Task CreateAsync(string title, string description, string image, string writer, string publisher);
-        Task UpdateAsync(Guid id);
+        Task CreateAsync(string title, string description, string image, string writer, string publisher, byte numberOfSets);
         Task RemoveAsync(Guid id);
     }
 }

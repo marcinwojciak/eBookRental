@@ -9,13 +9,20 @@ namespace eBookRental.Core.Domain
         public Guid Id { get; protected set; }
         public Guid BookId { get; protected set; }
         public Book Book { get; protected set; }
-        public bool IsAvailable { get; protected set; }
-        public IEnumerable <Rental> Rentals { get; protected set; }
+        public bool IsAvailable { get; set; }
+        public ICollection<Rental> Rentals { get; set; }
 
-        public Set()
+        protected Set()
+        {
+
+        }
+
+        public Set(Book book, bool isAvailable)
         {
             Id = Guid.NewGuid();
+            Book = book;
+            IsAvailable = isAvailable;
             Rentals = new List<Rental>();
-        }
+        }                                
     }
 }

@@ -9,7 +9,7 @@ namespace eBookRental.Core.Domain
         public Guid Id { get; protected set; }
         public GenreType Name { get; protected set; }
 
-        public IEnumerable<Book> Books { get; protected set; }
+        public ICollection<Book> Books { get; protected set; }
 
         protected Genre()
         {
@@ -20,7 +20,6 @@ namespace eBookRental.Core.Domain
         {
             Id = Guid.NewGuid();
             Name = name;
-
             Books = new List<Book>();
         }
     }

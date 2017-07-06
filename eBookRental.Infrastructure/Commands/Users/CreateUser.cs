@@ -11,5 +11,7 @@ namespace eBookRental.Infrastructure.Commands.Users
         public string Email { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        public string IdentityCard { get; set; }
+        public string Mobile { get; set; }
     }
 }

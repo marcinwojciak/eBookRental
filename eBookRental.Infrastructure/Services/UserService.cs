@@ -56,7 +56,7 @@ namespace eBookRental.Infrastructure.Services
         }
 
         public async Task RegisterAsync(Guid id, string email, string username, 
-            string fullName, string password, string role)
+            string fullName, string password, string role, string identityCard, string mobile)
         {
             var user = await _userRepository.GetSingleAsync(email);
 
@@ -67,7 +67,7 @@ namespace eBookRental.Infrastructure.Services
 
             var salt = _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password, salt);
-            user = new User(id, email, username, fullName, hash, salt, role);
+            user = new User(id, email, username, fullName, hash, salt, role, identityCard, mobile);
 
             await _userRepository.AddAsync(user);
         }

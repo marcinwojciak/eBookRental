@@ -3,6 +3,7 @@ using eBookRental.Core.Domain;
 using eBookRental.Core.Repositories;
 using eBookRental.Infrastructure.DTO;
 using eBookRental.Infrastructure.Services;
+using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace eBookRental.Tests.Services
 
             await bookService.GetSingleAsync("Lśnienie");
 
-            var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka");
+            var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
             bookRepositoryMock.Setup(x => x.GetSingleAsync(It.IsAny<string>()))
                              .ReturnsAsync(book);
@@ -40,7 +41,7 @@ namespace eBookRental.Tests.Services
 
             var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
 
-            var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka");
+            var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
             await bookService.GetSingleAsync(book.Id);
 
@@ -73,11 +74,11 @@ namespace eBookRental.Tests.Services
             var mapperMock = new Mock<IMapper>();
 
             var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
-            var bookId = Guid.NewGuid();
+            var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
-            await bookService.GetSingleAsync(bookId);
+            await bookService.GetSingleAsync(book.Id);
 
-            bookRepositoryMock.Setup(x => x.GetSingleAsync(bookId))
+            bookRepositoryMock.Setup(x => x.GetSingleAsync(book.Id))
                               .ReturnsAsync(() => null);
 
             bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Guid>()), Times.Once);
@@ -93,11 +94,11 @@ namespace eBookRental.Tests.Services
 
             var books = new Book[]
             {
-                new Book("ksiazka1", "opis1", "image1.png", "autor1", "wydawca1"),
-                new Book("ksiazka2", "opis2", "image2.png", "autor2", "wydawca2"),
-                new Book("ksiazka3", "opis3", "image3.png", "autor3", "wydawca3"),
-                new Book("ksiazka4", "opis4", "image4.png", "autor4", "wydawca4"),
-                new Book("ksiazka5", "opis5", "image5.png", "autor5", "wydawca5"),
+                new Book("ksiazka1", "opis1", "image1.png", "autor1", "wydawca1", 20),
+                new Book("ksiazka2", "opis2", "image2.png", "autor2", "wydawca2", 20),
+                new Book("ksiazka3", "opis3", "image3.png", "autor3", "wydawca3", 20),
+                new Book("ksiazka4", "opis4", "image4.png", "autor4", "wydawca4", 20),
+                new Book("ksiazka5", "opis5", "image5.png", "autor5", "wydawca5", 20),
             };
 
             await bookService.GetAllAsync();
@@ -118,16 +119,16 @@ namespace eBookRental.Tests.Services
 
             var books = new Book[]
             {
-                new Book("ksiazka1", "opis1", "image1.png", "autor1", "wydawca1"),
-                new Book("ksiazka2", "opis2", "image2.png", "autor2", "wydawca2"),
-                new Book("ksiazka3", "opis3", "image3.png", "autor3", "wydawca3"),
-                new Book("ksiazka4", "opis4", "image4.png", "Sapkowski", "wydawca4"),
-                new Book("ksiazka5", "opis5", "image5.png", "autor5", "wydawca5"),
+                new Book("ksiazka1", "opis1", "image1.png", "autor1", "wydawca1", 20),
+                new Book("ksiazka2", "opis2", "image2.png", "autor2", "wydawca2", 20),
+                new Book("ksiazka3", "opis3", "image3.png", "autor3", "wydawca3", 20),
+                new Book("ksiazka4", "opis4", "image4.png", "Sapkowski", "wydawca4", 20),
+                new Book("ksiazka5", "opis5", "image5.png", "autor5", "wydawca5", 20),
             };
 
             await bookService.GetByWriterAsync("Sapkowski");
 
-            Assert.Equal("ksiazka4", books[3].Title);
+            books[3].Title.ShouldBeEquivalentTo("ksiazka4");
         }
 
         [Fact]
@@ -137,22 +138,7 @@ namespace eBookRental.Tests.Services
             var mapperMock = new Mock<IMapper>();
 
             var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
-            await bookService.CreateAsync("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka");
-
-            bookRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Book>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task update_async_should_invoke_add_async_on_repository()
-        {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
-
-            var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka");
-            
-            await bookService.UpdateAsync(book.Id, "Mitologia nordycka", "opis", "image.png", "Gaiman Neil", "Wydawnictwo Mag");
+            await bookService.CreateAsync("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
             bookRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Book>()), Times.Once);
         }

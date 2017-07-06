@@ -20,7 +20,7 @@ namespace eBookRental.Infrastructure.Services
                 var userId = Guid.NewGuid();
                 var username = $"user{i}"; 
                 await _userService.RegisterAsync(userId, $"{username}@domain.com", 
-                    username, $"{username}-{i}" ,"secret", "user");
+                    username, $"{username}-{i}" ,"secret", "user", "1234567890987654", "123456789");
             }
 
             for (var i = 1; i <=5; i++)
@@ -28,7 +28,7 @@ namespace eBookRental.Infrastructure.Services
                 var userId = Guid.NewGuid();
                 var username = $"admin{i}";
                 await _userService.RegisterAsync(userId, $"{username}@domain.com",
-                    username, $"{username}-{i}", "secret", "admin");
+                    username, $"{username}-{i}", "secret", "admin", "1234567890987654", "123456789");
             }
         }
     }

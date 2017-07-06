@@ -29,14 +29,5 @@ namespace eBookRental.Api.Controllers
 
             return Ok(token);
         }
-
-        [HttpPut]
-        [Route("password")]
-        public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPassword command)
-        {
-            await CommandDispatcher.DispatchAsync(command);
-
-            return NoContent();
-        }
     }
 }

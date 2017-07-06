@@ -20,9 +20,16 @@ namespace eBookRental.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(string title, string description, string image, string writer, string publisher)
+        public async Task CreateAsync(string title, string description, string image, string writer, string publisher, byte numberOfSets)
         {
-            var book = new Book(title, description, image, writer, publisher);
+            var book = new Book(title, description, image, writer, publisher, numberOfSets);
+
+            for (int i = 0; i < book.NumberOfSets; i++)
+            {
+                Set set = new Set(book, true);
+
+                book.Sets.Add(set);
+            }
 
             await _bookRepository.AddAsync(book);
         }
@@ -30,6 +37,7 @@ namespace eBookRental.Infrastructure.Services
         public async Task<IEnumerable<BookDto>> GetAllAsync()
         {
             var books = await _bookRepository.GetAllAsync();
+            books.OrderBy(x => x.Title);
 
             return _mapper.Map<IEnumerable<Book>, IEnumerable<BookDto>>(books);
         }
@@ -71,20 +79,5 @@ namespace eBookRental.Infrastructure.Services
         {
             throw new NotImplementedException();
         }
-
-
-        //public async Task UpdateAsync(Guid id, BookDto bookDto)
-        //{
-        //    var book = await _bookRepository.GetSingleAsync(id);
-
-        //    if(book == null)
-        //    {
-        //        throw new Exception($"Book with id:{id} doesnt exist.");
-        //    }
-
-        //    _mapper.Map(bookDto, book);
-
-        //    await _bookRepository.AddAsync(book);
-        //}
     }
 }

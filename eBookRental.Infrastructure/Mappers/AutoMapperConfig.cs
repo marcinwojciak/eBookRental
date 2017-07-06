@@ -12,8 +12,11 @@ namespace eBookRental.Infrastructure.Mappers
         public static IMapper Initialize()
             => new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<Set, SetDto>();
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<Book, BookDto>();
+                cfg.CreateMap<Genre, GenreDto>();
+                cfg.CreateMap<Rental, RentalDto>();
             })
             .CreateMapper();
     }

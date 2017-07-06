@@ -6,7 +6,7 @@ namespace eBookRental.Core.Domain
 {
     public enum RentalStatus
     {
-        Rented,
-        NotRented
+        Borrowed,
+        Returned
     }
 }

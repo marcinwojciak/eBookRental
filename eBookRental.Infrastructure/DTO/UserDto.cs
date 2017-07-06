@@ -10,5 +10,8 @@ namespace eBookRental.Infrastructure.DTO
         public string FullName { get; set; }
         public string Role { get; set; }
         public string Email { get; set; }
+
+        public string IdentityCard { get; set; }
+        public string Mobile { get; set; }
     }
 }

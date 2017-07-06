@@ -17,7 +17,7 @@ namespace eBookRental.Infrastructure.Handlers.Books
         public async Task HandleAsync(CreateBook command)
         {
             await _bookService.CreateAsync(command.Title, command.Description, 
-                command.Image, command.Writer, command.Publisher);
+                command.Image, command.Writer, command.Publisher, command.NumberOfSets);
         }
     }
 }

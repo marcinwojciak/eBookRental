@@ -15,6 +15,9 @@ namespace eBookRental.Core.Domain
         public string Salt { get; protected set; }
         public string Role { get; protected set; }
 
+        public string IdentityCard { get; protected set; }
+        public string Mobile { get; protected set; }
+
         public DateTime CreatedAt { get; protected set; }
 
         private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
@@ -25,7 +28,7 @@ namespace eBookRental.Core.Domain
         }
 
         public User(Guid id, string email, string username, string fullName,
-            string password, string salt, string role)
+            string password, string salt, string role, string identityCard, string mobile)
         {
             Id = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
@@ -35,6 +38,33 @@ namespace eBookRental.Core.Domain
             SetFullName(username); 
             SetPassword(password, salt);
             SetRole(role);
+            SetIdentityCard(identityCard);
+            SetMobileNumber(mobile);
+        }
+
+        private void SetMobileNumber(string mobile)
+        {
+            if (string.IsNullOrWhiteSpace(mobile))
+            {
+                throw new Exception("Given mobile number is invalid.");
+            }
+
+            if (mobile.Length != 9)
+            {
+                throw new Exception("Given mobile number is invalid.");
+            }
+
+            Mobile = mobile;
+        }
+
+        private void SetIdentityCard(string identityCard)
+        {
+            if (string.IsNullOrWhiteSpace(identityCard))
+            {
+                throw new Exception("Given card number is invalid.");
+            }
+
+            IdentityCard = identityCard;
         }
 
         private void SetRole(string role)

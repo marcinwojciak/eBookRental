@@ -11,5 +11,6 @@ namespace eBookRental.Infrastructure.Commands.Books
         public string Image { get; set; }
         public string Writer { get; set; }
         public string Publisher { get; set; }
+        public byte NumberOfSets { get; set; }
     }
 }
