@@ -12,6 +12,5 @@ namespace eBookRental.Api.Controllers
         {
             CommandDispatcher = commandDispatcher;
         }
-
     }
 }

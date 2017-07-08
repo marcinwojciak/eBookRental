@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using eBookRental.Infrastructure.Settings;
 using System.Text;
 using eBookRental.Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace eBookRental.Api
 {
@@ -38,7 +40,12 @@ namespace eBookRental.Api
             services.AddAuthorization(x => x.AddPolicy("user", y => y.RequireRole("user")));
             services.AddAuthorization(x => x.AddPolicy("admin", p => p.RequireRole("admin")));
             services.AddSingleton(AutoMapperConfig.Initialize());
-            services.AddMvc();
+
+            services.AddMvc(setupAction => 
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+                setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            });
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
@@ -57,6 +64,22 @@ namespace eBookRental.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
+                    });
+                });
+            }
 
             var authSettings = app.ApplicationServices.GetService<AuthSettings>();
 

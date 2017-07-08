@@ -24,10 +24,7 @@ namespace eBookRental.Api.Controllers
         {
             var user = await _userService.GetSingleAsync(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+            NotFoundResult(user);
 
             return Ok(user);
         }
@@ -36,11 +33,6 @@ namespace eBookRental.Api.Controllers
         public async Task<IActionResult> Get(string email)
         {
             var user = await _userService.GetSingleAsync(email);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
 
             return Ok(user);
         }

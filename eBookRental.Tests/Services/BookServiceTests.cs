@@ -15,82 +15,76 @@ namespace eBookRental.Tests.Services
 {
     public class BookServiceTests
     {
+        private readonly Mock<IBookRepository> _bookRepositoryMock;
+        private readonly Mock<IMapper> _mapperMock;
+
+        public BookServiceTests()
+        {
+            _bookRepositoryMock = new Mock<IBookRepository>();
+            _mapperMock = new Mock<IMapper>();
+        }
+
         [Fact]
         public async Task get_single_async_should_invoke_user_repository_get_single_async_by_title_when_book_exists()
         {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
+            var bookService = new BookService(_bookRepositoryMock.Object, _mapperMock.Object);
 
             await bookService.GetSingleAsync("Lśnienie");
 
             var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
-            bookRepositoryMock.Setup(x => x.GetSingleAsync(It.IsAny<string>()))
+            _bookRepositoryMock.Setup(x => x.GetSingleAsync(It.IsAny<string>()))
                              .ReturnsAsync(book);
 
-            bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<string>()), Times.Once);
+            _bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public async Task get_single_async_should_invoke_book_repository_get_single_async_by_id_when_book_exists()
         {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
+            var bookService = new BookService(_bookRepositoryMock.Object, _mapperMock.Object);
 
             var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
             await bookService.GetSingleAsync(book.Id);
 
-            bookRepositoryMock.Setup(x => x.GetSingleAsync(It.IsAny<Guid>()))
+            _bookRepositoryMock.Setup(x => x.GetSingleAsync(It.IsAny<Guid>()))
                              .ReturnsAsync(book);
 
-            bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Guid>()), Times.Once);
+            _bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Guid>()), Times.Once);
         }
 
         [Fact]
         public async Task get_single_async_should_not_invoke_book_repository_get_single_async_by_title_when_book_does_not_exist()
         {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
+            var bookService = new BookService(_bookRepositoryMock.Object, _mapperMock.Object);
 
             await bookService.GetSingleAsync("Lśnienie");
 
-            bookRepositoryMock.Setup(x => x.GetSingleAsync("Lśnienie"))
+            _bookRepositoryMock.Setup(x => x.GetSingleAsync("Lśnienie"))
                               .ReturnsAsync(() => null);
 
-            bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<string>()), Times.Once);
+            _bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public async Task get_single_async_should_not_invoke_book_repository_get_single_async_by_id_when_book_does_not_exist()
         {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
+            var bookService = new BookService(_bookRepositoryMock.Object, _mapperMock.Object);
             var book = new Book("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
             await bookService.GetSingleAsync(book.Id);
 
-            bookRepositoryMock.Setup(x => x.GetSingleAsync(book.Id))
+            _bookRepositoryMock.Setup(x => x.GetSingleAsync(book.Id))
                               .ReturnsAsync(() => null);
 
-            bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Guid>()), Times.Once);
+            _bookRepositoryMock.Verify(x => x.GetSingleAsync(It.IsAny<Guid>()), Times.Once);
         }
 
         [Fact]
         public async Task get_all_async_should_invoke_book_repository_get_all_repository_when_books_exist()
         {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
+            var bookService = new BookService(_bookRepositoryMock.Object, _mapperMock.Object);
 
             var books = new Book[]
             {
@@ -103,19 +97,16 @@ namespace eBookRental.Tests.Services
 
             await bookService.GetAllAsync();
 
-            bookRepositoryMock.Setup(x => x.GetAllAsync())
+            _bookRepositoryMock.Setup(x => x.GetAllAsync())
                               .ReturnsAsync(books);
 
-            bookRepositoryMock.Verify(x => x.GetAllAsync(), Times.Once);
+            _bookRepositoryMock.Verify(x => x.GetAllAsync(), Times.Once);
         }
 
         [Fact]
         public async Task get_by_writer_async_should_find_a_book_for_specific_writer_when_books_exist()
         {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
+            var bookService = new BookService(_bookRepositoryMock.Object, _mapperMock.Object);
 
             var books = new Book[]
             {
@@ -134,13 +125,10 @@ namespace eBookRental.Tests.Services
         [Fact]
         public async Task create_async_should_invoke_add_async_on_repository()
         {
-            var bookRepositoryMock = new Mock<IBookRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var bookService = new BookService(bookRepositoryMock.Object, mapperMock.Object);
+            var bookService = new BookService(_bookRepositoryMock.Object, _mapperMock.Object);
             await bookService.CreateAsync("Lśnienie", "opis", "image.png", "Stephen King", "Prószyński i S-ka", 20);
 
-            bookRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Book>()), Times.Once);
+            _bookRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Book>()), Times.Once);
         }
     }
 }

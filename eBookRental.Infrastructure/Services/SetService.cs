@@ -13,6 +13,8 @@ namespace eBookRental.Infrastructure.Services
     {
         private readonly ISetRepository _setRepository;
         private readonly IMapper _mapper;
+        private object object1;
+        private object object2;
 
         public SetService(ISetRepository setRepository, IMapper mapper)
         {
