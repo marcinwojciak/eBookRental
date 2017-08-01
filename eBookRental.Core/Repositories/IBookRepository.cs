@@ -17,7 +17,7 @@ namespace eBookRental.Core.Repositories
         Task<Book> GetSingleAsync(string title);
 
         Task AddAsync(Book book);
-        Task UpdateAsync(string title, string description, string image, string writer, string publisher);
+        Task UpdateAsync(Book book);
         Task RemoveAsync(Guid id);
     }
 }

@@ -41,9 +41,9 @@ namespace eBookRental.Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task UpdateAsync(string title, string description, string image, string writer, string publisher)
+        public Task UpdateAsync(Book book)
         {
-            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
     }
 }

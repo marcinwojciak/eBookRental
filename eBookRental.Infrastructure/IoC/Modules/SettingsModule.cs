@@ -23,6 +23,8 @@ namespace eBookRental.Infrastructure.IoC.Modules
                    .SingleInstance();
             builder.RegisterInstance(_configuration.GetSettings<AuthSettings>())
                   .SingleInstance();
+            builder.RegisterInstance(_configuration.GetSettings<SqlSettings>())
+                  .SingleInstance();
         }
     }
 }

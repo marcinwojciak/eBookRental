@@ -4,8 +4,6 @@ using eBookRental.Core.Repositories;
 using eBookRental.Infrastructure.Services;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

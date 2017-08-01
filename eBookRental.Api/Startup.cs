@@ -14,6 +14,7 @@ using eBookRental.Infrastructure.Settings;
 using System.Text;
 using eBookRental.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using eBookRental.Infrastructure.Entities;
 
 namespace eBookRental.Api
 {
@@ -41,6 +42,10 @@ namespace eBookRental.Api
             services.AddAuthorization(x => x.AddPolicy("admin", p => p.RequireRole("admin")));
             services.AddSingleton(AutoMapperConfig.Initialize());
 
+            services.AddEntityFrameworkSqlServer()
+                    .AddEntityFrameworkInMemoryDatabase()
+                    .AddDbContext<eBookRentalContext>();
+
             services.AddMvc(setupAction => 
             {
                 setupAction.ReturnHttpNotAcceptable = true;
@@ -51,6 +56,7 @@ namespace eBookRental.Api
             builder.Populate(services);
             builder.RegisterModule<CommandModule>(); //do sprawdzenia, czy dobrze sa zrobione te moduły.
             builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<SqlModule>();
             builder.RegisterModule<RepositoryModule>();
             builder.RegisterModule(new SettingsModule(Configuration));
             ApplicationContainer = builder.Build();
